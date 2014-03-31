@@ -1,0 +1,10 @@
+parameters:
+
+
+nette:
+	database:
+		dsn: 'mysql:host=localhost;dbname=ZCalendar'
+		user: 'ZCalendar'
+		password: 'ZCalendar'
+		options:
+			lazy: yes

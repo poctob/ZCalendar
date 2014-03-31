@@ -1,0 +1,24 @@
+{* Latte template *}
+
+{block content}
+
+<p><a n:href="Homepage:default">← back to forms list</a></p>
+
+<a n:href="edit $zform->id">Edit this form</a>
+
+<div class="date">{$zform->created_at|date:'F j, Y'}</div>
+
+<h1 n:block="title">{$zform->name}</h1>
+
+<h2>Pages</h2>
+
+<div class="pages">
+    {foreach $pages as $page}        
+        <div>{$page->position}</div>
+        <div><{$page->created_at|date:'F j, Y'}/div>
+    {/foreach}
+</div>
+
+<h2>Add new page</h2>
+
+{control pageForm}

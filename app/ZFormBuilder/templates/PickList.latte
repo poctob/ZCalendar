@@ -1,0 +1,64 @@
+{* Latte template *}
+{block scripts}
+<script src="{$basePath}/js/jquery.js"></script>
+{/block}
+<script>
+    $(function() {
+        $("#picklistoptions li").draggable({
+            appendTo: "body",
+            helper: "clone"
+        });
+        $("#picklistcart ol").droppable({
+            activeClass: "ui-state-default",
+            hoverClass: "ui-state-hover",
+            accept: ":not(.ui-sortable-helper)",
+            drop: function(event, ui) {
+                $(this).find(".placeholder").remove();
+                $("<li></li>").text(ui.draggable.text()).appendTo(this);                
+            }
+        }).sortable({
+            items: "li:not(.placeholder)",
+            sort: function() {
+                // gets added unintentionally by droppable interacting with sortable
+                // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+                $(this).removeClass("ui-state-default");
+            }
+        });
+        
+        $("#picklistclear")
+                .button()
+                .click(function(){
+                    $("#picklistcart ol li").remove();
+                    $("#picklistcart ol").append("<li class='placeholder'>Add your items here</li>");
+        });
+       
+    });
+</script>
+{block content}
+
+<span>PickList Stub</span>
+
+<div id="picklistoptions">
+    <h1 class="ui-widget-header">{$title}</h1>    
+    <ul>
+        {foreach $items as $item}
+            <li>{$item}</li>
+            {/foreach}   
+    </ul>
+</div>
+
+<div id="picklistcart">
+    <h1 class="ui-widget-header">{$cart_title}</h1>
+    <div class="ui-widget-content">
+        <ol>
+            <li class="placeholder">Add your items here</li>
+        </ol>
+    </div>
+    
+     <div id="picklistcontrols">
+         <button id="picklistclear">Clear</button>
+         <input type="submit" value="Save">
+    </div>
+</div>
+    
+   
