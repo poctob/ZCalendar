@@ -14,7 +14,7 @@
             accept: ":not(.ui-sortable-helper)",
             drop: function(event, ui) {
                 $(this).find(".placeholder").remove();
-                $("<li></li>").text(ui.draggable.text()).appendTo(this);                
+                $("<li></li>").text(ui.draggable.text()).appendTo(this);
             }
         }).sortable({
             items: "li:not(.placeholder)",
@@ -24,22 +24,30 @@
                 $(this).removeClass("ui-state-default");
             }
         });
-        
-        $("#picklistclear")
+
+        $('[name="picklistclear"]')
                 .button()
-                .click(function(){
+                .click(function() {
                     $("#picklistcart ol li").remove();
                     $("#picklistcart ol").append("<li class='placeholder'>Add your items here</li>");
+                });
+
+        $("#picklistcontrols").submit(function(event) {
+            alert("Handler for .submit() called.");
+            event.preventDefault();
         });
-       
+
+
+
     });
 </script>
 {block content}
 
-<span>PickList Stub</span>
+<h2>PickList</h2>
+{snippet flash}<h2 n:ifset="$flash">{$flash}</h2>{/snippet}
 
 <div id="picklistoptions">
-    <h1 class="ui-widget-header">{$title}</h1>    
+    <h3 class="ui-widget-header">{$title}</h3>    
     <ul>
         {foreach $items as $item}
             <li>{$item}</li>
@@ -48,17 +56,14 @@
 </div>
 
 <div id="picklistcart">
-    <h1 class="ui-widget-header">{$cart_title}</h1>
+    <h3 class="ui-widget-header">{$cart_title}</h3>
     <div class="ui-widget-content">
         <ol>
             <li class="placeholder">Add your items here</li>
         </ol>
     </div>
-    
-     <div id="picklistcontrols">
-         <button id="picklistclear">Clear</button>
-         <input type="submit" value="Save">
-    </div>
+    {control submitForm}
 </div>
-    
-   
+
+
+

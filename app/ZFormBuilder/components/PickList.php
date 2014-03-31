@@ -19,7 +19,8 @@
 
 namespace App\ZFormBuilder\Components;
 
-use Nette\Application\UI;
+use Nette,
+        Nette\Application\UI;
 
 /**
  * Description of PickList, drag and drop pick list component.
@@ -67,6 +68,26 @@ class PickList extends UI\Control {
         $template->title = $this->title;
         $template->cart_title = $this->cart_title;
         $template->render();
+    }
+    
+    /**
+     * Processes items from the list
+     * @param Selected items $list
+     */
+    public function processList($list)
+    {
+        if($this->isAjax())
+        {
+            $this->payload->message = 'Success';
+        }
+    }
+    
+    public function createComponentSubmitForm()
+    {
+         $form = new Nette\Application\UI\Form;
+         $form->addButton("picklistclear", "Clear");
+         $form->addSubmit("Save");
+         return $form; 
     }
 
 }
